@@ -1,5 +1,9 @@
+import 'package:dev_mode/model/sign_in.dart';
+import 'package:dev_mode/providerViewModel/signin_provider.dart';
+import 'package:dev_mode/views/constants/success_error.dart';
 import 'package:dev_mode/views/home/home_image.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -9,11 +13,12 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    SigninProvider signinProvider = context.read<SigninProvider>();
+    bool isLoading = context.watch<SigninProvider>().isLoading;
     return Scaffold(
       body: HomeImage(
         child: SafeArea(
@@ -44,8 +49,8 @@ class _LoginState extends State<Login> {
                         ),
                       ),
                       SizedBox(height: 32),
+
                       //TextField
-                      
                       const SizedBox(height: 14),
                       _showTextField(
                         hint: 'Enter your email',
@@ -61,12 +66,49 @@ class _LoginState extends State<Login> {
 
                       const SizedBox(height: 28),
                       GestureDetector(
-                        onTap: () {},
+                        onTap: isLoading
+                            ? null
+                            : () async {
+                                await signinProvider.signInUser(
+                                  email: _emailController.text.trim(),
+                                  password: _passwordController.text.trim(),
+                                );
+
+                                String? errorMessage =
+                                    signinProvider.errorMessage;
+                                SignInModel? user = signinProvider.user;
+
+                                if (!context.mounted) {
+                                  return;
+                                }
+
+                                if (errorMessage != null) {
+                                  showErrorOrSuccess(
+                                    message: errorMessage,
+                                    color: Colors.red,
+                                    context: context,
+                                  );
+                                } else if (user != null) {
+                                  showErrorOrSuccess(
+                                    message: 'Welcome ${user.playerName}',
+                                    color: Colors.green,
+                                    context: context,
+                                  );
+                                }
+                              },
                         child: Container(
                           height: 90,
                           width: 90,
                           decoration: BoxDecoration(shape: BoxShape.circle),
-                          child: Image.asset('assets/images/go.png'),
+                          child: isLoading
+                              ? Text(
+                                  'Signinig you in...',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'JetBrainsMono',
+                                  ),
+                                )
+                              : Image.asset('assets/images/go.png'),
                         ),
                       ),
                       SizedBox(height: 28),

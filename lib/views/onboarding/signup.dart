@@ -1,5 +1,9 @@
+import 'package:dev_mode/model/sign_up.dart';
+import 'package:dev_mode/providerViewModel/signup_provider.dart';
+import 'package:dev_mode/views/constants/success_error.dart';
 import 'package:dev_mode/views/home/home_image.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Signup extends StatefulWidget {
   const Signup({super.key});
@@ -14,6 +18,8 @@ class _SignupState extends State<Signup> {
   final TextEditingController _passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    bool isLoading = context.watch<SignupProvider>().isLoading;
+    SignupProvider signUpProvider = context.read<SignupProvider>();
     return Scaffold(
       body: HomeImage(
         child: SafeArea(
@@ -63,14 +69,57 @@ class _SignupState extends State<Signup> {
                       ),
 
                       const SizedBox(height: 28),
+                      //GO BUTTON
                       GestureDetector(
-                        onTap: () {},
-                        child: Container(
-                          height: 90,
-                          width: 90,
-                          decoration: BoxDecoration(shape: BoxShape.circle),
-                          child: Image.asset('assets/images/go.png'),
-                        ),
+                        onTap: isLoading
+                            ? null
+                            : () async {
+                                await signUpProvider.signUpUser(
+                                  playerName: _playerController.text.trim(),
+                                  email: _emailController.text.trim(),
+                                  password: _passwordController.text.trim(),
+                                );
+
+                                final String? errorMessage =
+                                    signUpProvider.errorMessage;
+                                final SignUpModel? user = signUpProvider.user;
+
+                                if (!context.mounted) {
+                                  return;
+                                }
+
+                                if (errorMessage != null) {
+                                  //handle error
+                                  showErrorOrSuccess(
+                                    message: errorMessage,
+                                    color: Colors.red,
+                                    context: context,
+                                  );
+                                } else if (user != null) {
+                                  //tell the user
+                                  showErrorOrSuccess(
+                                    message: 'Welcome ${user.playerName}',
+                                    color: Colors.green,
+                                    context: context,
+                                  );
+                                }
+                              },
+                        child: !isLoading
+                            ? Container(
+                                height: 90,
+                                width: 90,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Image.asset('assets/images/go.png'),
+                              )
+                            : Text(
+                                'Signing you upp...',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: 'JetBrainsMono',
+                                ),
+                              ),
                       ),
                       SizedBox(height: 28),
 

@@ -13,7 +13,7 @@ class HomeImage extends StatefulWidget {
 
 class _HomeImageState extends State<HomeImage> {
   late Timer _colorTimer;
-  Color _startColor = Colors.orange;
+  Color _startColor = Colors.white;
 
   @override
   void initState() {
