@@ -25,7 +25,7 @@ class _HomeImageState extends State<HomeImage> {
   void _selectRandomColor() {
     List<Color> pageColors = [Colors.orange, Colors.white, Colors.yellow];
 
-    _colorTimer = Timer.periodic(Duration(seconds: 30), (Timer timer) {
+    _colorTimer = Timer.periodic(Duration(seconds: 60), (Timer timer) {
       Random random = Random();
       int randInt = random.nextInt(pageColors.length);
       setState(() {

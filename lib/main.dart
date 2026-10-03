@@ -3,6 +3,8 @@ import 'package:dev_mode/providerViewModel/signup_provider.dart';
 import 'package:dev_mode/views/home/home.dart';
 import 'package:dev_mode/views/onboarding/sign_in.dart';
 import 'package:dev_mode/views/onboarding/signup.dart';
+import 'package:dev_mode/views/onboarding/welcome/welcome.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
@@ -30,7 +32,7 @@ class DevMode extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Login(),//Signup(), //HomePage() ,
+      home: Welcome(),//Login(),//Signup(), //HomePage() ,
       debugShowCheckedModeBanner: false,
     );
   }
