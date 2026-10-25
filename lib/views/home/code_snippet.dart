@@ -23,7 +23,7 @@ return name;
       height: MediaQuery.of(context).size.height * 0.4,
       width: double.infinity,
       decoration: BoxDecoration(
-        color: Color(0xFF272822),
+        color: Colors.black.withValues(alpha: 0.2),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: Colors.white.withValues(alpha: 0.08)),
         boxShadow: [
@@ -67,15 +67,14 @@ return name;
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: SingleChildScrollView(
-                child: HighlightView(
-                  code,
-                  language: _language,
-                  theme: monokaiSublimeTheme,
-                  padding: EdgeInsets.all(18),
-                  textStyle: TextStyle(
-                    fontFamily: 'JetBrainsMono',
-                    fontSize: 15,
-                    height: 1.5,
+                child: Padding(
+                  padding: EdgeInsets.all(20),
+                  child: Text(
+                    code,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontFamily: 'JetBrainsMono',
+                    ),
                   ),
                 ),
               ),
@@ -88,11 +87,14 @@ return name;
           ),
 
           _showKeyWordsAndAnswer(
-            topic: 'Answer: ', 
-            topicValue: 'Terminates a\nprogram', 
+            topic: 'Answer: ',
+            topicValue: 'Terminates a\nprogram',
             topicValueColor: Colors.green,
-            visibility: IconButton(onPressed: (){}, icon: Icon(Icons.visibility))
-            )
+            visibility: IconButton(
+              onPressed: () {},
+              icon: Icon(Icons.visibility),
+            ),
+          ),
         ],
       ),
     );

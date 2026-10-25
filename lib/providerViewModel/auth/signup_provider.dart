@@ -1,5 +1,5 @@
 import 'package:dev_mode/backendService/signUpService.dart';
-import 'package:dev_mode/model/sign_up.dart';
+import 'package:dev_mode/model/auth/sign_up.dart';
 import 'package:flutter/material.dart';
 
 class SignupProvider extends ChangeNotifier {

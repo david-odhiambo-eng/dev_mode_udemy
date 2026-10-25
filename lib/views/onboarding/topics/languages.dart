@@ -1,8 +1,13 @@
+import 'package:dev_mode/providerViewModel/get_quiz.dart';
+import 'package:dev_mode/providers/get_quiz_provider.dart';
+import 'package:dev_mode/views/home/home.dart';
 import 'package:dev_mode/views/home/home_image.dart';
 import 'package:dev_mode/views/reusables/colors.dart';
 import 'package:dev_mode/views/reusables/icons_bool.dart';
+import 'package:dev_mode/views/reusables/success_error.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
 class Languages extends StatefulWidget {
   const Languages({super.key});
@@ -16,6 +21,8 @@ class _LanguagesState extends State<Languages> {
   int _languageCount = 0;
   @override
   Widget build(BuildContext context) {
+    TopicNamesProvider topicsNameProvider = context.read<TopicNamesProvider>();
+    GetQuizProvider getQuizProvider = context.read<GetQuizProvider>();
     return Scaffold(
       body: HomeImage(
         child: SafeArea(
@@ -56,6 +63,9 @@ class _LanguagesState extends State<Languages> {
                             });
 
                             isPython ? _increaseCount() : _reduceCount();
+                            topicsNameProvider.addTopicNames(
+                              topicName: 'Python',
+                            );
                           },
                         ),
 
@@ -70,6 +80,9 @@ class _LanguagesState extends State<Languages> {
                             });
 
                             isJs ? _increaseCount() : _reduceCount();
+                            topicsNameProvider.addTopicNames(
+                              topicName: 'JavaScript',
+                            );
                           },
                         ),
 
@@ -83,6 +96,7 @@ class _LanguagesState extends State<Languages> {
                               isJava = !isJava;
                             });
                             isJava ? _increaseCount() : _reduceCount();
+                            topicsNameProvider.addTopicNames(topicName: 'Java');
                           },
                         ),
 
@@ -96,6 +110,7 @@ class _LanguagesState extends State<Languages> {
                               isCpp = !isCpp;
                             });
                             isCpp ? _increaseCount() : _reduceCount();
+                            topicsNameProvider.addTopicNames(topicName: 'C++');
                           },
                         ),
 
@@ -111,6 +126,7 @@ class _LanguagesState extends State<Languages> {
                               isC = !isC;
                             });
                             isC ? _increaseCount() : _reduceCount();
+                            topicsNameProvider.addTopicNames(topicName: 'C#');
                           },
                         ),
 
@@ -126,6 +142,9 @@ class _LanguagesState extends State<Languages> {
                               isTypeScript = !isTypeScript;
                             });
                             isTypeScript ? _increaseCount() : _reduceCount();
+                            topicsNameProvider.addTopicNames(
+                              topicName: 'TypeScript',
+                            );
                           },
                         ),
 
@@ -139,6 +158,7 @@ class _LanguagesState extends State<Languages> {
                               isGo = !isGo;
                             });
                             isGo ? _increaseCount() : _reduceCount();
+                            topicsNameProvider.addTopicNames(topicName: 'Go');
                           },
                         ),
 
@@ -152,6 +172,7 @@ class _LanguagesState extends State<Languages> {
                               isRust = !isRust;
                             });
                             isRust ? _increaseCount() : _reduceCount();
+                            topicsNameProvider.addTopicNames(topicName: 'Rust');
                           },
                         ),
 
@@ -165,6 +186,7 @@ class _LanguagesState extends State<Languages> {
                               isPhp = !isPhp;
                             });
                             isPhp ? _increaseCount() : _reduceCount();
+                            topicsNameProvider.addTopicNames(topicName: 'PHP');
                           },
                         ),
 
@@ -178,6 +200,7 @@ class _LanguagesState extends State<Languages> {
                               isDart = !isDart;
                             });
                             isDart ? _increaseCount() : _reduceCount();
+                            topicsNameProvider.addTopicNames(topicName: 'Dart');
                           },
                         ),
                       ],
@@ -197,7 +220,37 @@ class _LanguagesState extends State<Languages> {
                               borderRadius: BorderRadius.circular(12),
                             ),
                           ),
-                          onPressed: () {},
+                          onPressed: () async {
+                            //sending request to backend
+                            await getQuizProvider.getQuizDb(
+                              topicNames: topicsNameProvider.topicNames,
+                            );
+
+                            if (!context.mounted) {
+                              return;
+                            }
+
+                            if (getQuizProvider.quizResponse != null) {
+                              showErrorOrSuccess(
+                                message: 'READY TO START',
+                                color: Colors.green,
+                                context: context,
+                              );
+
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => HomePage(),
+                                ),
+                              );
+                            } else if (getQuizProvider.errorMessage != null) {
+                              showErrorOrSuccess(
+                                message: '${getQuizProvider.errorMessage}',
+                                color: Colors.red,
+                                context: context,
+                              );
+                            }
+                          },
                           child: const Text(
                             'DONE',
                             style: TextStyle(

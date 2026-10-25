@@ -1,5 +1,7 @@
-import 'package:dev_mode/providerViewModel/signin_provider.dart';
-import 'package:dev_mode/providerViewModel/signup_provider.dart';
+import 'package:dev_mode/providerViewModel/auth/signin_provider.dart';
+import 'package:dev_mode/providerViewModel/auth/signup_provider.dart';
+import 'package:dev_mode/providerViewModel/get_quiz.dart';
+import 'package:dev_mode/providers/get_quiz_provider.dart';
 import 'package:dev_mode/views/home/home.dart';
 import 'package:dev_mode/views/onboarding/sign_in.dart';
 import 'package:dev_mode/views/onboarding/signup.dart';
@@ -18,8 +20,9 @@ Future<void> main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => SignupProvider()),
-        ChangeNotifierProvider(create: (_) => SigninProvider())
-
+        ChangeNotifierProvider(create: (_) => SigninProvider()),
+        ChangeNotifierProvider(create: (_) => TopicNamesProvider()),
+        ChangeNotifierProvider(create: (_) => GetQuizProvider()),
       ],
       child: DevMode(),
     ),
@@ -32,7 +35,7 @@ class DevMode extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Welcome(),//Login(),//Signup(), //HomePage() ,
+      home: Welcome(), //Login(),//Signup(), //HomePage() ,
       debugShowCheckedModeBanner: false,
     );
   }

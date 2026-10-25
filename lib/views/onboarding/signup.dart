@@ -1,5 +1,5 @@
-import 'package:dev_mode/model/sign_up.dart';
-import 'package:dev_mode/providerViewModel/signup_provider.dart';
+import 'package:dev_mode/model/auth/sign_up.dart';
+import 'package:dev_mode/providerViewModel/auth/signup_provider.dart';
 import 'package:dev_mode/views/reusables/success_error.dart';
 import 'package:dev_mode/views/home/home_image.dart';
 import 'package:flutter/material.dart';

@@ -1,5 +1,5 @@
-import 'package:dev_mode/backendService/signin_service.dart';
-import 'package:dev_mode/model/sign_in.dart';
+import 'package:dev_mode/backendService/auth/signin_service.dart';
+import 'package:dev_mode/model/auth/sign_in.dart';
 
 import 'package:flutter/material.dart';
 

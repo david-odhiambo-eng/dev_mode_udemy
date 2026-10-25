@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:dev_mode/model/sign_in.dart';
+import 'package:dev_mode/model/auth/sign_in.dart';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;

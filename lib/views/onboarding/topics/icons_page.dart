@@ -1,8 +1,10 @@
+import 'package:dev_mode/providers/get_quiz_provider.dart';
 import 'package:dev_mode/views/onboarding/topics/languages.dart';
 import 'package:dev_mode/views/reusables/colors.dart';
 import 'package:dev_mode/views/reusables/icons_bool.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
 class IconsPage extends StatefulWidget {
   const IconsPage({super.key});
@@ -17,6 +19,8 @@ class _IconsPageState extends State<IconsPage> {
   bool _isNextButtonActive = false;
   @override
   Widget build(BuildContext context) {
+    TopicNamesProvider getQuizProvider = context.read<TopicNamesProvider>();
+
     return Expanded(
       child: Stack(
         children: [
@@ -33,6 +37,7 @@ class _IconsPageState extends State<IconsPage> {
               });
 
               isAiSelected ? _increaseTopicCount() : _decreaseTopicCount();
+              getQuizProvider.addTopicNames(topicName: 'AI');
             },
           ),
           //ML
@@ -47,6 +52,7 @@ class _IconsPageState extends State<IconsPage> {
                 isMlSelected = !isMlSelected;
               });
               isMlSelected ? _increaseTopicCount() : _decreaseTopicCount();
+              getQuizProvider.addTopicNames(topicName: 'ML');
             },
           ),
           //DOCKER
@@ -61,6 +67,7 @@ class _IconsPageState extends State<IconsPage> {
                 isDockerSelected = !isDockerSelected;
               });
               isDockerSelected ? _increaseTopicCount() : _decreaseTopicCount();
+              getQuizProvider.addTopicNames(topicName: 'Docker');
             },
           ),
           //DATABASE
@@ -77,6 +84,7 @@ class _IconsPageState extends State<IconsPage> {
               isDatabaseSelected
                   ? _increaseTopicCount()
                   : _decreaseTopicCount();
+              getQuizProvider.addTopicNames(topicName: 'Database');
             },
           ),
           //DSA
@@ -92,6 +100,7 @@ class _IconsPageState extends State<IconsPage> {
                 isDsaSelected = !isDsaSelected;
               });
               isDsaSelected ? _increaseTopicCount() : _decreaseTopicCount();
+              getQuizProvider.addTopicNames(topicName: 'DSA');
             },
           ),
           //GIT
@@ -106,6 +115,7 @@ class _IconsPageState extends State<IconsPage> {
                 isGitSelected = !isGitSelected;
               });
               isGitSelected ? _increaseTopicCount() : _decreaseTopicCount();
+              getQuizProvider.addTopicNames(topicName: 'Git');
             },
           ),
           //BACKEND
@@ -120,6 +130,7 @@ class _IconsPageState extends State<IconsPage> {
                 isServerSelected = !isServerSelected;
               });
               isServerSelected ? _increaseTopicCount() : _decreaseTopicCount();
+              getQuizProvider.addTopicNames(topicName: 'Backend');
             },
           ),
           //CODE
@@ -135,6 +146,7 @@ class _IconsPageState extends State<IconsPage> {
                 isCodeSelected = !isCodeSelected;
               });
               isCodeSelected ? _increaseTopicCount() : _decreaseTopicCount();
+              getQuizProvider.addTopicNames(topicName: 'Code');
             },
           ),
           //WEB
@@ -149,6 +161,7 @@ class _IconsPageState extends State<IconsPage> {
               setState(() {
                 isWebSelected = !isWebSelected;
                 isWebSelected ? _increaseTopicCount() : _decreaseTopicCount();
+                getQuizProvider.addTopicNames(topicName: 'Web');
               });
             },
           ),
