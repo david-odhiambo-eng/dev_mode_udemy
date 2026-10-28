@@ -5,6 +5,7 @@ import 'package:dev_mode/providers/get_quiz_provider.dart';
 import 'package:dev_mode/views/home/home.dart';
 import 'package:dev_mode/views/onboarding/sign_in.dart';
 import 'package:dev_mode/views/onboarding/signup.dart';
+import 'package:dev_mode/views/onboarding/topics/add_teams.dart';
 import 'package:dev_mode/views/onboarding/welcome/welcome.dart';
 
 import 'package:flutter/material.dart';
@@ -35,7 +36,7 @@ class DevMode extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Welcome(), //Login(),//Signup(), //HomePage() ,
+      home: AddTeams(),//Welcome(), //Login(),//Signup(), //HomePage() ,
       debugShowCheckedModeBanner: false,
     );
   }
