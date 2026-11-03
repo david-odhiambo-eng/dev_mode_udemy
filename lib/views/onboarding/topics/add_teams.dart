@@ -1,9 +1,13 @@
+import 'package:dev_mode/providers/team_name.dart';
 import 'package:dev_mode/sharedPrefernce/create_teams.dart';
 import 'package:dev_mode/views/home/home.dart';
+
 import 'package:dev_mode/views/home/home_image.dart';
+import 'package:dev_mode/views/onboarding/topics/topics.dart';
 import 'package:dev_mode/views/reusables/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
 class AddTeams extends StatefulWidget {
   const AddTeams({super.key});
@@ -15,8 +19,10 @@ class AddTeams extends StatefulWidget {
 class _AddTeamsState extends State<AddTeams> {
   final TextEditingController _teamNamesController = TextEditingController();
   bool _isTextFieldShowing = false;
+  bool _isEditing = false;
   List<String> _teams = [];
   List<String> _tempTeamNames = [];
+  Set<String> _seletceteTeam = {};
 
   @override
   void initState() {
@@ -34,6 +40,8 @@ class _AddTeamsState extends State<AddTeams> {
 
   @override
   Widget build(BuildContext context) {
+    SelectedTeamProvider selectedTeamProvider = context
+        .read<SelectedTeamProvider>();
     return Scaffold(
       body: HomeImage(
         child: Padding(
@@ -321,31 +329,81 @@ class _AddTeamsState extends State<AddTeams> {
                               ),
                               child: Row(
                                 children: [
-                                  Container(
-                                    height: 36,
-                                    width: 36,
-                                    decoration: BoxDecoration(
-                                      color: mainButttonColor.withValues(
-                                        alpha: 0.2,
+                                  GestureDetector(
+                                    onTap: () {
+                                      _isEditing = !_isEditing;
+                                      if (!_seletceteTeam.contains(teamName) &&
+                                          _seletceteTeam.isEmpty) {
+                                        setState(() {
+                                          _seletceteTeam.add(teamName);
+                                          selectedTeamProvider.selectTeamName(
+                                            teamName: teamName,
+                                          );
+                                        });
+                                      } else {
+                                        setState(() {
+                                          _seletceteTeam.clear();
+                                        });
+                                      }
+                                    },
+                                    child: Container(
+                                      height: 36,
+                                      width: 36,
+                                      decoration: BoxDecoration(
+                                        color: mainButttonColor,
+                                        borderRadius: BorderRadius.circular(9),
                                       ),
-                                      borderRadius: BorderRadius.circular(9),
-                                    ),
-                                    child: Center(
-                                      child: FaIcon(
-                                        FontAwesomeIcons.users,
-                                        color: Colors.white,
-                                        size: 14,
+                                      child: Center(
+                                        child: FaIcon(
+                                          FontAwesomeIcons.pen,
+                                          color: Colors.white,
+                                          size: 14,
+                                        ),
                                       ),
                                     ),
                                   ),
-                                  SizedBox(height: 12),
+                                  SizedBox(width: 12),
                                   Expanded(
-                                    child: Text(
-                                      teamName,
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontFamily: 'JetBrainsMono',
-                                        fontSize: 12,
+                                    child: TextButton(
+                                      style: TextButton.styleFrom(
+                                        backgroundColor:
+                                            _seletceteTeam.contains(teamName)
+                                            ? Colors.white
+                                            : mainButttonColor,
+                                        foregroundColor: Colors.white,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                            30,
+                                          ),
+                                        ),
+                                      ),
+                                      onPressed: () {
+                                        if (!_seletceteTeam.contains(
+                                              teamName,
+                                            ) &&
+                                            _seletceteTeam.isEmpty) {
+                                          setState(() {
+                                            _seletceteTeam.add(teamName);
+                                            selectedTeamProvider.selectTeamName(
+                                              teamName: teamName,
+                                            );
+                                          });
+                                        } else {
+                                          setState(() {
+                                            _seletceteTeam.clear();
+                                          });
+                                        }
+                                      },
+                                      child: Text(
+                                        teamName,
+                                        style: TextStyle(
+                                          color:
+                                              _seletceteTeam.contains(teamName)
+                                              ? Colors.black
+                                              : Colors.white,
+                                          fontFamily: 'JetBrainsMono',
+                                          fontSize: 12,
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -372,42 +430,55 @@ class _AddTeamsState extends State<AddTeams> {
                         ),
                 ),
                 const SizedBox(height: 28),
-                SizedBox(
-                  height: 52,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: mainButttonColor,
-                      foregroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadiusGeometry.circular(12),
-                      ),
-                      elevation: 0,
-                    ),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => HomePage()),
-                      );
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'PROCEED',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'JetBrainsMono',
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold,
-                            letterSpacing: 1.2,
+                _seletceteTeam.isNotEmpty
+                    ? SizedBox(
+                        height: 52,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: mainButttonColor,
+                            foregroundColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadiusGeometry.circular(12),
+                            ),
+                            elevation: 0,
+                          ),
+                          onPressed: _isEditing
+                              ? () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => TopicsPage(),
+                                    ),
+                                  );
+                                }
+                              : () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => HomePage(),
+                                    ),
+                                  );
+                                },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'PROCEED',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: 'JetBrainsMono',
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 1.2,
+                                ),
+                              ),
+                              SizedBox(width: 10),
+                              FaIcon(FontAwesomeIcons.arrowRight, size: 14),
+                            ],
                           ),
                         ),
-                        SizedBox(width: 10),
-                        FaIcon(FontAwesomeIcons.arrowRight, size: 14),
-                      ],
-                    ),
-                  ),
-                ),
+                      )
+                    : SizedBox.shrink(),
               ],
             ),
           ),

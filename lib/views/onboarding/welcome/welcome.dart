@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:dev_mode/views/home/home_image.dart';
+import 'package:dev_mode/views/onboarding/topics/add_teams.dart';
 import 'package:dev_mode/views/onboarding/topics/topics.dart';
 import 'package:dev_mode/views/reusables/type_text.dart';
 import 'package:flutter/material.dart';
@@ -91,7 +92,7 @@ def hello():
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => TopicsPage()),
+                        MaterialPageRoute(builder: (context) => AddTeams()),
                       );
                     },
                     child: Text(

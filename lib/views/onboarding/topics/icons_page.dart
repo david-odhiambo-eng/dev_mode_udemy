@@ -1,4 +1,4 @@
-import 'package:dev_mode/providers/get_quiz_provider.dart';
+import 'package:dev_mode/providers/topic_names_provider.dart';
 import 'package:dev_mode/views/onboarding/topics/languages.dart';
 import 'package:dev_mode/views/reusables/colors.dart';
 import 'package:dev_mode/views/reusables/icons_bool.dart';
@@ -19,7 +19,7 @@ class _IconsPageState extends State<IconsPage> {
   bool _isNextButtonActive = false;
   @override
   Widget build(BuildContext context) {
-    TopicNamesProvider getQuizProvider = context.read<TopicNamesProvider>();
+    TopicNamesProvider topicsNameProvider = context.read<TopicNamesProvider>();
 
     return Expanded(
       child: Stack(
@@ -37,7 +37,9 @@ class _IconsPageState extends State<IconsPage> {
               });
 
               isAiSelected ? _increaseTopicCount() : _decreaseTopicCount();
-              getQuizProvider.addTopicNames(topicName: 'AI');
+              isAiSelected
+                  ? topicsNameProvider.addTopicNames(topicName: 'AI')
+                  : topicsNameProvider.deleteTopicName(topicName: 'AI');
             },
           ),
           //ML
@@ -52,7 +54,9 @@ class _IconsPageState extends State<IconsPage> {
                 isMlSelected = !isMlSelected;
               });
               isMlSelected ? _increaseTopicCount() : _decreaseTopicCount();
-              getQuizProvider.addTopicNames(topicName: 'ML');
+              isMlSelected
+                  ? topicsNameProvider.addTopicNames(topicName: 'ML')
+                  : topicsNameProvider.deleteTopicName(topicName: 'ML');
             },
           ),
           //DOCKER
@@ -67,7 +71,9 @@ class _IconsPageState extends State<IconsPage> {
                 isDockerSelected = !isDockerSelected;
               });
               isDockerSelected ? _increaseTopicCount() : _decreaseTopicCount();
-              getQuizProvider.addTopicNames(topicName: 'Docker');
+              isDockerSelected
+                  ? topicsNameProvider.addTopicNames(topicName: 'Docker')
+                  : topicsNameProvider.deleteTopicName(topicName: 'Docker');
             },
           ),
           //DATABASE
@@ -84,7 +90,9 @@ class _IconsPageState extends State<IconsPage> {
               isDatabaseSelected
                   ? _increaseTopicCount()
                   : _decreaseTopicCount();
-              getQuizProvider.addTopicNames(topicName: 'Database');
+              isDatabaseSelected
+                  ? topicsNameProvider.addTopicNames(topicName: 'Database')
+                  : topicsNameProvider.deleteTopicName(topicName: 'Database');
             },
           ),
           //DSA
@@ -100,7 +108,9 @@ class _IconsPageState extends State<IconsPage> {
                 isDsaSelected = !isDsaSelected;
               });
               isDsaSelected ? _increaseTopicCount() : _decreaseTopicCount();
-              getQuizProvider.addTopicNames(topicName: 'DSA');
+              isDsaSelected
+                  ? topicsNameProvider.addTopicNames(topicName: 'DSA')
+                  : topicsNameProvider.deleteTopicName(topicName: 'DSA');
             },
           ),
           //GIT
@@ -115,7 +125,9 @@ class _IconsPageState extends State<IconsPage> {
                 isGitSelected = !isGitSelected;
               });
               isGitSelected ? _increaseTopicCount() : _decreaseTopicCount();
-              getQuizProvider.addTopicNames(topicName: 'Git');
+              isGitSelected
+                  ? topicsNameProvider.addTopicNames(topicName: 'Git')
+                  : topicsNameProvider.deleteTopicName(topicName: 'Git');
             },
           ),
           //BACKEND
@@ -130,7 +142,9 @@ class _IconsPageState extends State<IconsPage> {
                 isServerSelected = !isServerSelected;
               });
               isServerSelected ? _increaseTopicCount() : _decreaseTopicCount();
-              getQuizProvider.addTopicNames(topicName: 'Backend');
+              isServerSelected
+                  ? topicsNameProvider.addTopicNames(topicName: 'Backend')
+                  : topicsNameProvider.deleteTopicName(topicName: 'Backend');
             },
           ),
           //CODE
@@ -146,7 +160,9 @@ class _IconsPageState extends State<IconsPage> {
                 isCodeSelected = !isCodeSelected;
               });
               isCodeSelected ? _increaseTopicCount() : _decreaseTopicCount();
-              getQuizProvider.addTopicNames(topicName: 'Code');
+              isCodeSelected
+                  ? topicsNameProvider.addTopicNames(topicName: 'Code')
+                  : topicsNameProvider.deleteTopicName(topicName: 'Code');
             },
           ),
           //WEB
@@ -161,7 +177,9 @@ class _IconsPageState extends State<IconsPage> {
               setState(() {
                 isWebSelected = !isWebSelected;
                 isWebSelected ? _increaseTopicCount() : _decreaseTopicCount();
-                getQuizProvider.addTopicNames(topicName: 'Web');
+                isWebSelected
+                    ? topicsNameProvider.addTopicNames(topicName: 'Web')
+                    : topicsNameProvider.deleteTopicName(topicName: 'Web');
               });
             },
           ),

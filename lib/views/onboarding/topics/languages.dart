@@ -1,5 +1,8 @@
+import 'package:dev_mode/model/get_quiz.dart';
 import 'package:dev_mode/providerViewModel/get_quiz.dart';
-import 'package:dev_mode/providers/get_quiz_provider.dart';
+import 'package:dev_mode/providers/team_name.dart';
+import 'package:dev_mode/providers/team_quiz_data.dart';
+import 'package:dev_mode/providers/topic_names_provider.dart';
 import 'package:dev_mode/views/home/home.dart';
 import 'package:dev_mode/views/home/home_image.dart';
 import 'package:dev_mode/views/reusables/colors.dart';
@@ -23,6 +26,10 @@ class _LanguagesState extends State<Languages> {
   Widget build(BuildContext context) {
     TopicNamesProvider topicsNameProvider = context.read<TopicNamesProvider>();
     GetQuizProvider getQuizProvider = context.read<GetQuizProvider>();
+    SelectedTeamProvider selectedTeamProvider = context
+        .read<SelectedTeamProvider>();
+    TeamQuizDataProvider teamQuizDataProvider = context
+        .read<TeamQuizDataProvider>();
     return Scaffold(
       body: HomeImage(
         child: SafeArea(
@@ -63,9 +70,13 @@ class _LanguagesState extends State<Languages> {
                             });
 
                             isPython ? _increaseCount() : _reduceCount();
-                            topicsNameProvider.addTopicNames(
-                              topicName: 'Python',
-                            );
+                            isPython
+                                ? topicsNameProvider.addTopicNames(
+                                    topicName: 'Python',
+                                  )
+                                : topicsNameProvider.deleteTopicName(
+                                    topicName: 'Python',
+                                  );
                           },
                         ),
 
@@ -80,9 +91,13 @@ class _LanguagesState extends State<Languages> {
                             });
 
                             isJs ? _increaseCount() : _reduceCount();
-                            topicsNameProvider.addTopicNames(
-                              topicName: 'JavaScript',
-                            );
+                            isJs
+                                ? topicsNameProvider.addTopicNames(
+                                    topicName: 'JavaScript',
+                                  )
+                                : topicsNameProvider.deleteTopicName(
+                                    topicName: 'JavaScript',
+                                  );
                           },
                         ),
 
@@ -96,7 +111,13 @@ class _LanguagesState extends State<Languages> {
                               isJava = !isJava;
                             });
                             isJava ? _increaseCount() : _reduceCount();
-                            topicsNameProvider.addTopicNames(topicName: 'Java');
+                            isJava
+                                ? topicsNameProvider.addTopicNames(
+                                    topicName: 'Java',
+                                  )
+                                : topicsNameProvider.deleteTopicName(
+                                    topicName: 'Java',
+                                  );
                           },
                         ),
 
@@ -110,7 +131,13 @@ class _LanguagesState extends State<Languages> {
                               isCpp = !isCpp;
                             });
                             isCpp ? _increaseCount() : _reduceCount();
-                            topicsNameProvider.addTopicNames(topicName: 'C++');
+                            isCpp
+                                ? topicsNameProvider.addTopicNames(
+                                    topicName: 'C++',
+                                  )
+                                : topicsNameProvider.deleteTopicName(
+                                    topicName: 'C++',
+                                  );
                           },
                         ),
 
@@ -126,7 +153,13 @@ class _LanguagesState extends State<Languages> {
                               isC = !isC;
                             });
                             isC ? _increaseCount() : _reduceCount();
-                            topicsNameProvider.addTopicNames(topicName: 'C#');
+                            isC
+                                ? topicsNameProvider.addTopicNames(
+                                    topicName: 'C#',
+                                  )
+                                : topicsNameProvider.deleteTopicName(
+                                    topicName: 'C#',
+                                  );
                           },
                         ),
 
@@ -142,9 +175,13 @@ class _LanguagesState extends State<Languages> {
                               isTypeScript = !isTypeScript;
                             });
                             isTypeScript ? _increaseCount() : _reduceCount();
-                            topicsNameProvider.addTopicNames(
-                              topicName: 'TypeScript',
-                            );
+                            isTypeScript
+                                ? topicsNameProvider.addTopicNames(
+                                    topicName: 'TypeScript',
+                                  )
+                                : topicsNameProvider.deleteTopicName(
+                                    topicName: 'TypeScript',
+                                  );
                           },
                         ),
 
@@ -158,7 +195,13 @@ class _LanguagesState extends State<Languages> {
                               isGo = !isGo;
                             });
                             isGo ? _increaseCount() : _reduceCount();
-                            topicsNameProvider.addTopicNames(topicName: 'Go');
+                            isGo
+                                ? topicsNameProvider.addTopicNames(
+                                    topicName: 'Go',
+                                  )
+                                : topicsNameProvider.deleteTopicName(
+                                    topicName: 'Go',
+                                  );
                           },
                         ),
 
@@ -172,7 +215,13 @@ class _LanguagesState extends State<Languages> {
                               isRust = !isRust;
                             });
                             isRust ? _increaseCount() : _reduceCount();
-                            topicsNameProvider.addTopicNames(topicName: 'Rust');
+                            isRust
+                                ? topicsNameProvider.addTopicNames(
+                                    topicName: 'Rust',
+                                  )
+                                : topicsNameProvider.deleteTopicName(
+                                    topicName: 'Rust',
+                                  );
                           },
                         ),
 
@@ -186,7 +235,13 @@ class _LanguagesState extends State<Languages> {
                               isPhp = !isPhp;
                             });
                             isPhp ? _increaseCount() : _reduceCount();
-                            topicsNameProvider.addTopicNames(topicName: 'PHP');
+                            isPhp
+                                ? topicsNameProvider.addTopicNames(
+                                    topicName: 'PHP',
+                                  )
+                                : topicsNameProvider.deleteTopicName(
+                                    topicName: 'PHP',
+                                  );
                           },
                         ),
 
@@ -200,7 +255,13 @@ class _LanguagesState extends State<Languages> {
                               isDart = !isDart;
                             });
                             isDart ? _increaseCount() : _reduceCount();
-                            topicsNameProvider.addTopicNames(topicName: 'Dart');
+                            isDart
+                                ? topicsNameProvider.addTopicNames(
+                                    topicName: 'Dart',
+                                  )
+                                : topicsNameProvider.deleteTopicName(
+                                    topicName: 'Dart',
+                                  );
                           },
                         ),
                       ],
@@ -231,6 +292,13 @@ class _LanguagesState extends State<Languages> {
                             }
 
                             if (getQuizProvider.quizResponse != null) {
+                              List<GetQuizModel>? questions =
+                                  getQuizProvider.quizResponse;
+                              teamQuizDataProvider.addTeamData(
+                                teamName: selectedTeamProvider.selectedTeamName,
+                                questions: questions,
+                              );
+
                               showErrorOrSuccess(
                                 message: 'READY TO START',
                                 color: Colors.green,
@@ -250,6 +318,31 @@ class _LanguagesState extends State<Languages> {
                                 context: context,
                               );
                             }
+                            topicsNameProvider.clearAllTopics();
+                            setState(() {
+                              isAiSelected = false;
+                              isMlSelected = false;
+                              isDsaSelected = false;
+                              isDockerSelected = false;
+                              isDatabaseSelected = false;
+                              isCodeSelected = false;
+                              isGitSelected = false;
+                              isServerSelected = false;
+                              isWebSelected = false;
+
+                              //languages
+                              isPython = false;
+                              isJs = false;
+                              isJava = false;
+                              isCpp = false;
+                              isC = false;
+                              isTypeScript = false;
+                              isGo = false;
+                              isRust = false;
+                              isPhp = false;
+                              isDart = false;
+                              _languageCount = 0;
+                            });
                           },
                           child: const Text(
                             'DONE',

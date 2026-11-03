@@ -1,7 +1,9 @@
 import 'package:dev_mode/providerViewModel/auth/signin_provider.dart';
 import 'package:dev_mode/providerViewModel/auth/signup_provider.dart';
 import 'package:dev_mode/providerViewModel/get_quiz.dart';
-import 'package:dev_mode/providers/get_quiz_provider.dart';
+import 'package:dev_mode/providers/team_quiz_data.dart';
+import 'package:dev_mode/providers/topic_names_provider.dart';
+import 'package:dev_mode/providers/team_name.dart';
 import 'package:dev_mode/views/home/home.dart';
 import 'package:dev_mode/views/onboarding/sign_in.dart';
 import 'package:dev_mode/views/onboarding/signup.dart';
@@ -24,6 +26,8 @@ Future<void> main() async {
         ChangeNotifierProvider(create: (_) => SigninProvider()),
         ChangeNotifierProvider(create: (_) => TopicNamesProvider()),
         ChangeNotifierProvider(create: (_) => GetQuizProvider()),
+        ChangeNotifierProvider(create: (_) => SelectedTeamProvider()),
+        ChangeNotifierProvider(create: (_) => TeamQuizDataProvider()),
       ],
       child: DevMode(),
     ),
@@ -36,7 +40,7 @@ class DevMode extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: AddTeams(),//Welcome(), //Login(),//Signup(), //HomePage() ,
+      home: Welcome(), //Login(),//Signup(), //HomePage() ,
       debugShowCheckedModeBanner: false,
     );
   }
