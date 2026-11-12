@@ -5,10 +5,7 @@ import 'package:dev_mode/providers/quiz_index_and_rounds.dart';
 import 'package:dev_mode/providers/team_quiz_data.dart';
 import 'package:dev_mode/providers/topic_names_provider.dart';
 import 'package:dev_mode/providers/team_name.dart';
-import 'package:dev_mode/views/home/home.dart';
-import 'package:dev_mode/views/onboarding/sign_in.dart';
-import 'package:dev_mode/views/onboarding/signup.dart';
-import 'package:dev_mode/views/onboarding/topics/add_teams.dart';
+
 import 'package:dev_mode/views/onboarding/welcome/welcome.dart';
 
 import 'package:flutter/material.dart';
