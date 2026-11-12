@@ -1,4 +1,5 @@
 import 'package:dev_mode/providers/team_name.dart';
+import 'package:dev_mode/providers/team_quiz_data.dart';
 import 'package:dev_mode/sharedPrefernce/create_teams.dart';
 import 'package:dev_mode/views/home/home.dart';
 
@@ -42,6 +43,8 @@ class _AddTeamsState extends State<AddTeams> {
   Widget build(BuildContext context) {
     SelectedTeamProvider selectedTeamProvider = context
         .read<SelectedTeamProvider>();
+    TeamQuizDataProvider teamQuizDataProvider = context
+        .read<TeamQuizDataProvider>();
     return Scaffold(
       body: HomeImage(
         child: Padding(
@@ -452,10 +455,17 @@ class _AddTeamsState extends State<AddTeams> {
                                   );
                                 }
                               : () {
+                                  bool teamExists = teamQuizDataProvider
+                                      .teamData
+                                      .containsKey(
+                                        selectedTeamProvider.selectedTeamName,
+                                      );
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => HomePage(),
+                                      builder: (context) => teamExists
+                                          ? HomePage()
+                                          : TopicsPage(),
                                     ),
                                   );
                                 },

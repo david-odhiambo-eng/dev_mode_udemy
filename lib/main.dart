@@ -1,6 +1,7 @@
 import 'package:dev_mode/providerViewModel/auth/signin_provider.dart';
 import 'package:dev_mode/providerViewModel/auth/signup_provider.dart';
 import 'package:dev_mode/providerViewModel/get_quiz.dart';
+import 'package:dev_mode/providers/quiz_index_and_rounds.dart';
 import 'package:dev_mode/providers/team_quiz_data.dart';
 import 'package:dev_mode/providers/topic_names_provider.dart';
 import 'package:dev_mode/providers/team_name.dart';
@@ -28,6 +29,8 @@ Future<void> main() async {
         ChangeNotifierProvider(create: (_) => GetQuizProvider()),
         ChangeNotifierProvider(create: (_) => SelectedTeamProvider()),
         ChangeNotifierProvider(create: (_) => TeamQuizDataProvider()),
+        ChangeNotifierProvider(create: (_) => QuizIndexAndRoundsProvider()),
+        
       ],
       child: DevMode(),
     ),

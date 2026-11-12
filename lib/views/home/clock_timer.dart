@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:audioplayers/audioplayers.dart';
+import 'package:dev_mode/providers/quiz_index_and_rounds.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ClockTimer extends StatefulWidget {
   const ClockTimer({super.key});
@@ -36,19 +38,20 @@ class _ClockTimerState extends State<ClockTimer>
   }
 
   //play audio
-  Future<void> _playAudio()async{
+  Future<void> _playAudio() async {
     await _audioPlayer.play(AssetSource('audio/thanos.MP3'));
   }
 
   //changing timer value
-  Future<void> _startTimer() async{
+  Future<void> _startTimer({required QuizIndexAndRoundsProvider isRoundStarted}) async {
     setState(() {
       _isTimerStarted = true;
+      isRoundStarted.startRound();
     });
 
     _timerAnimationController.forward(from: 0);
 
-    _clockTimer = Timer.periodic(Duration(seconds: 1), (Timer timer){
+    _clockTimer = Timer.periodic(Duration(seconds: 1), (Timer timer) {
       if (_timerValue > 0) {
         setState(() {
           _timerValue--;
@@ -69,17 +72,18 @@ class _ClockTimerState extends State<ClockTimer>
 
         setState(() {
           _isTimerStarted = false;
+          isRoundStarted.endRound();
           _timerValue = 60;
           _color = Colors.white;
         });
-
-        
       }
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    QuizIndexAndRoundsProvider quizIndexAndRoundsProvider = context
+        .read<QuizIndexAndRoundsProvider>();
     return AnimatedBuilder(
       animation: _timerAnimationController,
       builder: (BuildContext context, child) {
@@ -92,16 +96,16 @@ class _ClockTimerState extends State<ClockTimer>
                   fontFamily: 'JetBrainsMono',
                 ),
               )
-            : _showGoButton();
+            : _showGoButton(isRoundStarted: quizIndexAndRoundsProvider);
       },
     );
   }
 
   //showing go button
-  Widget _showGoButton() {
+  Widget _showGoButton({required QuizIndexAndRoundsProvider isRoundStarted}) {
     return GestureDetector(
       onTap: () {
-        _startTimer();
+        _startTimer(isRoundStarted: isRoundStarted);
       },
       child: SizedBox(
         height: 110,
